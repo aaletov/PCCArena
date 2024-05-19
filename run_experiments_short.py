@@ -5,7 +5,7 @@ from xvfbwrapper import Xvfb
 from utils.file_io import get_logging_config
 from algs_wrapper.Draco import Draco
 from algs_wrapper.GPCC import GPCC
-from algs_wrapper.VPCC import VPCC
+# from algs_wrapper.VPCC import VPCC
 from algs_wrapper.GeoCNNv1 import GeoCNNv1
 from algs_wrapper.GeoCNNv2 import GeoCNNv2
 from algs_wrapper.PCGCv1 import PCGCv1
@@ -34,7 +34,7 @@ def main():
         # draco.run_dataset('8i_loot_geo_25', 'experiments')
         # draco.run_dataset('8i_soldier_geo_25', 'experiments')
         # draco.run_dataset('8i_redandblack_geo_25', 'experiments')
-        
+
     gpcc = GPCC()
     for rate in range(1):
         gpcc.rate = f'r{rate+1}'
@@ -54,15 +54,15 @@ def main():
         # gpcc.run_dataset('8i_soldier_geo_25', 'experiments')
         # gpcc.run_dataset('8i_redandblack_geo_25', 'experiments')
 
-    vpcc = VPCC()
-    for rate in range(1):
-        vpcc.rate = f'r{rate+1}'
-        vpcc.run_dataset('Debug_SNCC', 'experiments')
-        # vpcc.run_dataset('SNCC_Test100', 'experiments')
-        # vpcc.run_dataset('8i_longdress_25', 'experiments')
-        # vpcc.run_dataset('8i_loot_25', 'experiments')
-        # vpcc.run_dataset('8i_soldier_25', 'experiments')
-        # vpcc.run_dataset('8i_redandblack_25', 'experiments')
+    # vpcc = VPCC()
+    # for rate in range(1):
+    #     vpcc.rate = f'r{rate+1}'
+    #     vpcc.run_dataset('Debug_SNCC', 'experiments')
+    #     # vpcc.run_dataset('SNCC_Test100', 'experiments')
+    #     # vpcc.run_dataset('8i_longdress_25', 'experiments')
+    #     # vpcc.run_dataset('8i_loot_25', 'experiments')
+    #     # vpcc.run_dataset('8i_soldier_25', 'experiments')
+    #     # vpcc.run_dataset('8i_redandblack_25', 'experiments')
 
     # geocnn_v1 = GeoCNNv1()
     # for rate in range(1):
@@ -104,7 +104,7 @@ def main():
         # pcgc_v1.run_dataset('8i_loot_geo_25', 'experiments')
         # pcgc_v1.run_dataset('8i_soldier_geo_25', 'experiments')
         # pcgc_v1.run_dataset('8i_redandblack_geo_25', 'experiments')
-    
+
     pcgc_v2 = PCGCv2()
     for rate in range(1):
         pcgc_v2.rate = f'r{rate+1}'
@@ -121,13 +121,13 @@ def main():
 if __name__ == '__main__':
     # [TODO]
     # Workaround for using open3d visualizer with multithreading.
-    # Create an virtual display and set the env var. for all the 
-    # threads. If we move back to multiprocessing in the future, 
-    # then this should be set in 
+    # Create an virtual display and set the env var. for all the
+    # threads. If we move back to multiprocessing in the future,
+    # then this should be set in
     # `evaluator/metrics/ProjectionBasedMetrics.py` evaluate().
     disp = Xvfb()
     disp.start()
     main()
     disp.stop()
-    
+
     summarize_all_to_csv('experiments')
