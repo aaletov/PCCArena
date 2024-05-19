@@ -18,7 +18,7 @@ conda env remove -n PCGCv2
 conda env create -f cfgs/conda_env/GeoCNNv1.yml
 conda env create -f cfgs/conda_env/GeoCNNv2.yml
 conda env create -f cfgs/conda_env/PCGCv1.yml
-conda env create -f cfgs/conda_env/PCGCv2.yml
+# conda env create -f cfgs/conda_env/PCGCv2.yml
 
 
 
@@ -69,10 +69,10 @@ then
 fi
 
 ## PCGCv2
-if [ ! -d "./PCGCv2" ]
-then
-    git clone https://github.com/xtorker/PCGCv2.git PCGCv2
-fi
+# if [ ! -d "./PCGCv2" ]
+# then
+#     git clone https://github.com/xtorker/PCGCv2.git PCGCv2
+# fi
 
 cd ..
 
@@ -99,4 +99,4 @@ cd ../../../..
 
 # ========== In [root] ==========
 mv checkpoints/ algorithms/PCGCv1/
-mv ckpts/ algorithms/PCGCv2/
+# mv ckpts/ algorithms/PCGCv2/
