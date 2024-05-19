@@ -8,7 +8,7 @@ if [ ! -f evaluator/dependencies/mpeg-pcc-dmetric-master.tar.gz ]; then
     exit 0
 fi
 
-# Cleaning conda environments 
+# Cleaning conda environments
 conda env remove -n GeoCNNv1
 conda env remove -n GeoCNNv2
 conda env remove -n PCGCv1
@@ -26,7 +26,7 @@ cd algorithms
 # ========== In [root]/algs/ ==========
 
 ## Draco
-git clone --depth 1 --branch 1.3.6 https://github.com/google/draco.git Draco
+git clone --depth 1 --branch 1.4.3 https://github.com/google/draco.git Draco
 cd Draco
 mkdir build && cd build && cmake .. && make
 cd ../..
@@ -62,7 +62,7 @@ cd evaluator/dependencies
 # ========== In [root]/evaluator/dependencies ==========
 
 # MPEG pcc dmetric
-# Download mpeg-pcc-dmetric-master.tar.gz v0.13.5 
+# Download mpeg-pcc-dmetric-master.tar.gz v0.13.5
 # from http://mpegx.int-evry.fr/software/MPEG/PCC/mpeg-pcc-dmetric
 tar zxvf mpeg-pcc-dmetric-master.tar.gz
 patch -sp0 < mpeg-pcc-dmetric.patch
