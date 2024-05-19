@@ -8,7 +8,7 @@ from algs_wrapper.GPCC import GPCC
 # from algs_wrapper.VPCC import VPCC
 from algs_wrapper.GeoCNNv1 import GeoCNNv1
 from algs_wrapper.GeoCNNv2 import GeoCNNv2
-# from algs_wrapper.PCGCv1 import PCGCv1
+from algs_wrapper.PCGCv1 import PCGCv1
 from algs_wrapper.PCGCv2 import PCGCv2
 from evaluator.summary import summarize_all_to_csv
 
@@ -92,10 +92,10 @@ def main():
         # geocnn_v2.run_dataset('8i_soldier_geo_25', 'experiments')
         # geocnn_v2.run_dataset('8i_redandblack_geo_25', 'experiments')
 
-    # pcgc_v1 = PCGCv1()
-    # for rate in range(1):
-    #     pcgc_v1.rate = f'r{rate+1}'
-    #     pcgc_v1.run_dataset('Sample_SNC', 'experiments')
+    pcgc_v1 = PCGCv1()
+    for rate in range(1):
+        pcgc_v1.rate = f'r{rate+1}'
+        pcgc_v1.run_dataset('Sample_SNC', 'experiments')
         # pcgc_v1.run_dataset('Debug_SNC', 'experiments')
         # pcgc_v1.run_dataset('SNC_Test100', 'experiments')
         # pcgc_v1.run_dataset('MN40_Test100', 'experiments')
