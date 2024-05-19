@@ -6,8 +6,8 @@ from utils.file_io import get_logging_config
 from algs_wrapper.Draco import Draco
 from algs_wrapper.GPCC import GPCC
 # from algs_wrapper.VPCC import VPCC
-from algs_wrapper.GeoCNNv1 import GeoCNNv1
-from algs_wrapper.GeoCNNv2 import GeoCNNv2
+# from algs_wrapper.GeoCNNv1 import GeoCNNv1
+# from algs_wrapper.GeoCNNv2 import GeoCNNv2
 from algs_wrapper.PCGCv1 import PCGCv1
 # from algs_wrapper.PCGCv2 import PCGCv2
 from evaluator.summary import summarize_all_to_csv
@@ -79,18 +79,18 @@ def main():
         # geocnn_v1.run_dataset('8i_soldier_geo_25', 'experiments', nbprocesses=1)
         # geocnn_v1.run_dataset('8i_redandblack_geo_25', 'experiments', nbprocesses=1)
 
-    geocnn_v2 = GeoCNNv2()
-    for rate in range(1):
-        geocnn_v2.rate = f'r{rate+1}'
-        geocnn_v2.run_dataset('Sample_SNC', 'experiments')
-        # geocnn_v2.run_dataset('Debug_SNC', 'experiments')
-        # geocnn_v2.run_dataset('SNC_Test100', 'experiments')
-        # geocnn_v2.run_dataset('MN40_Test100', 'experiments')
-        # geocnn_v2.run_dataset('CAPOD_100', 'experiments')
-        # geocnn_v2.run_dataset('8i_longdress_geo_25', 'experiments')
-        # geocnn_v2.run_dataset('8i_loot_geo_25', 'experiments')
-        # geocnn_v2.run_dataset('8i_soldier_geo_25', 'experiments')
-        # geocnn_v2.run_dataset('8i_redandblack_geo_25', 'experiments')
+    # geocnn_v2 = GeoCNNv2()
+    # for rate in range(1):
+    #     geocnn_v2.rate = f'r{rate+1}'
+    #     geocnn_v2.run_dataset('Sample_SNC', 'experiments')
+    #     # geocnn_v2.run_dataset('Debug_SNC', 'experiments')
+    #     # geocnn_v2.run_dataset('SNC_Test100', 'experiments')
+    #     # geocnn_v2.run_dataset('MN40_Test100', 'experiments')
+    #     # geocnn_v2.run_dataset('CAPOD_100', 'experiments')
+    #     # geocnn_v2.run_dataset('8i_longdress_geo_25', 'experiments')
+    #     # geocnn_v2.run_dataset('8i_loot_geo_25', 'experiments')
+    #     # geocnn_v2.run_dataset('8i_soldier_geo_25', 'experiments')
+    #     # geocnn_v2.run_dataset('8i_redandblack_geo_25', 'experiments')
 
     pcgc_v1 = PCGCv1()
     for rate in range(1):

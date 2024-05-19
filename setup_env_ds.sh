@@ -15,8 +15,8 @@ conda env remove -n PCGCv1
 conda env remove -n PCGCv2
 
 # ========== In [root] ==========
-conda env create -f cfgs/conda_env/GeoCNNv1.yml
-conda env create -f cfgs/conda_env/GeoCNNv2.yml
+# conda env create -f cfgs/conda_env/GeoCNNv1.yml
+# conda env create -f cfgs/conda_env/GeoCNNv2.yml
 conda env create -f cfgs/conda_env/PCGCv1.yml
 # conda env create -f cfgs/conda_env/PCGCv2.yml
 
@@ -51,16 +51,16 @@ fi
 # cd ..
 
 ## GeoCNNv1
-if [ ! -d "./GeoCNNv1" ]
-then
-    git clone https://github.com/mauriceqch/pcc_geo_cnn.git GeoCNNv1
-fi
+# if [ ! -d "./GeoCNNv1" ]
+# then
+#     git clone https://github.com/mauriceqch/pcc_geo_cnn.git GeoCNNv1
+# fi
 
-## GeoCNNv2
-if [ ! -d "./GeoCNNv2" ]
-then
-    git clone https://github.com/mauriceqch/pcc_geo_cnn_v2.git GeoCNNv2
-fi
+# ## GeoCNNv2
+# if [ ! -d "./GeoCNNv2" ]
+# then
+#     git clone https://github.com/mauriceqch/pcc_geo_cnn_v2.git GeoCNNv2
+# fi
 
 ## PCGCv1
 if [ ! -d "./PCGCv1" ]
