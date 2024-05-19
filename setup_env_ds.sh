@@ -26,16 +26,23 @@ cd algorithms
 # ========== In [root]/algs/ ==========
 
 ## Draco
-git clone --depth 1 --branch 1.4.3 https://github.com/google/draco.git Draco
-cd Draco
-mkdir build && cd build && cmake .. && make
-cd ../..
+if [ ! -d "./Draco" ]
+then
+    git clone --depth 1 --branch 1.4.3 https://github.com/google/draco.git Draco
+    cd Draco
+    mkdir build && cd build && cmake .. && make
+    cd ../..
+fi
+
 
 ## GPCC
-git clone --depth 1 --branch release-v12.0 https://github.com/MPEGGroup/mpeg-pcc-tmc13.git GPCC
-cd GPCC
-mkdir build && cd build && cmake .. && make
-cd ../..
+if [ ! -d "./GPCC" ]
+then
+    git clone --depth 1 --branch release-v12.0 https://github.com/MPEGGroup/mpeg-pcc-tmc13.git GPCC
+    cd GPCC
+    mkdir build && cd build && cmake .. && make
+    cd ../..
+fi
 
 ## VPCC
 # git clone --depth 1 --branch release-v12.0 https://github.com/MPEGGroup/mpeg-pcc-tmc2.git VPCC
@@ -44,16 +51,28 @@ cd ../..
 # cd ..
 
 ## GeoCNNv1
-git clone https://github.com/mauriceqch/pcc_geo_cnn.git GeoCNNv1
+if [ ! -d "./GeoCNNv1" ]
+then
+    git clone https://github.com/mauriceqch/pcc_geo_cnn.git GeoCNNv1
+fi
 
 ## GeoCNNv2
-git clone https://github.com/mauriceqch/pcc_geo_cnn_v2.git GeoCNNv2
+if [ ! -d "./GeoCNNv2" ]
+then
+    git clone https://github.com/mauriceqch/pcc_geo_cnn_v2.git GeoCNNv2
+fi
 
 ## PCGCv1
-git clone https://github.com/xtorker/PCGCv1.git PCGCv1
+if [ ! -d "./PCGCv1" ]
+then
+    git clone https://github.com/xtorker/PCGCv1.git PCGCv1
+fi
 
 ## PCGCv2
-git clone https://github.com/xtorker/PCGCv2.git PCGCv2
+if [ ! -d "./PCGCv2" ]
+then
+    git clone https://github.com/xtorker/PCGCv2.git PCGCv2
+fi
 
 cd ..
 
