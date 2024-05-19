@@ -11,13 +11,13 @@ fi
 # Cleaning conda environments
 conda env remove -n GeoCNNv1
 conda env remove -n GeoCNNv2
-conda env remove -n PCGCv1
+# conda env remove -n PCGCv1
 conda env remove -n PCGCv2
 
 # ========== In [root] ==========
 conda env create -f cfgs/conda_env/GeoCNNv1.yml
 conda env create -f cfgs/conda_env/GeoCNNv2.yml
-conda env create -f cfgs/conda_env/PCGCv1.yml
+# conda env create -f cfgs/conda_env/PCGCv1.yml
 conda env create -f cfgs/conda_env/PCGCv2.yml
 
 
@@ -63,10 +63,10 @@ then
 fi
 
 ## PCGCv1
-if [ ! -d "./PCGCv1" ]
-then
-    git clone https://github.com/xtorker/PCGCv1.git PCGCv1
-fi
+# if [ ! -d "./PCGCv1" ]
+# then
+#     git clone https://github.com/xtorker/PCGCv1.git PCGCv1
+# fi
 
 ## PCGCv2
 if [ ! -d "./PCGCv2" ]
@@ -98,5 +98,5 @@ mkdir build && cd build && cmake .. && make
 cd ../../../..
 
 # ========== In [root] ==========
-mv checkpoints/ algorithms/PCGCv1/
+# mv checkpoints/ algorithms/PCGCv1/
 mv ckpts/ algorithms/PCGCv2/
