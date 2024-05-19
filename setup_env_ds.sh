@@ -1,5 +1,5 @@
 #! /bin/bash
-set -euo pipefail
+set -euox pipefail
 
 # check mpeg-pcc-dmetric-master.tar.gz exists
 if [ ! -f evaluator/dependencies/mpeg-pcc-dmetric-master.tar.gz ]; then
