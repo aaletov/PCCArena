@@ -38,10 +38,10 @@ mkdir build && cd build && cmake .. && make
 cd ../..
 
 ## VPCC
-git clone --depth 1 --branch release-v12.0 https://github.com/MPEGGroup/mpeg-pcc-tmc2.git VPCC
-cd VPCC
-./build.sh
-cd ..
+# git clone --depth 1 --branch release-v12.0 https://github.com/MPEGGroup/mpeg-pcc-tmc2.git VPCC
+# cd VPCC
+# ./build.sh
+# cd ..
 
 ## GeoCNNv1
 git clone https://github.com/mauriceqch/pcc_geo_cnn.git GeoCNNv1
