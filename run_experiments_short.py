@@ -19,9 +19,9 @@ def main():
     draco = Draco()
     for rate in range(1):
         draco.rate = f'r{rate+1}'
-        draco.run_dataset('Sample_SNC', 'experiments')
+        # draco.run_dataset('Sample_SNC', 'experiments')
         # draco.run_dataset('Debug_SNC', 'experiments')
-        draco.run_dataset('Debug_SNCC', 'experiments')
+        draco.run_dataset('Debug_SNCC', 'experiments', nbprocesses=1)
         # draco.run_dataset('SNC_Test100', 'experiments')
         # draco.run_dataset('SNCC_Test100', 'experiments')
         # draco.run_dataset('MN40_Test100', 'experiments')
@@ -40,7 +40,7 @@ def main():
         gpcc.rate = f'r{rate+1}'
         # gpcc.run_dataset('Sample_SNC', 'experiments')
         # gpcc.run_dataset('Debug_SNC', 'experiments')
-        gpcc.run_dataset('Debug_SNCC', 'experiments')
+        gpcc.run_dataset('Debug_SNCC', 'experiments', nbprocesses=1)
         # gpcc.run_dataset('SNC_Test100', 'experiments')
         # gpcc.run_dataset('SNCC_Test100', 'experiments')
         # gpcc.run_dataset('MN40_Test100', 'experiments')

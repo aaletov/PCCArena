@@ -43,10 +43,10 @@ class Base(metaclass=abc.ABCMeta):
 
     @property
     def rate(self) -> str:
-        """Specify the set of bitrate control coding parameters. 
-        The related coding parameters need to be configured in the 
+        """Specify the set of bitrate control coding parameters.
+        The related coding parameters need to be configured in the
         corresponding PCC algs config file.
-        
+
         Returns
         -------
         `str`
@@ -67,13 +67,13 @@ class Base(metaclass=abc.ABCMeta):
     @property
     def debug(self) -> bool:
         return self._debug
-    
+
     @debug.setter
     def debug(self, debug: bool) -> None:
         if type(debug) is not bool:
             logger.error("`debug` flag must be a boolean value.")
             raise ValueError
-        
+
         if debug is True:
             self._debug = True
             logger.info(
@@ -95,7 +95,7 @@ class Base(metaclass=abc.ABCMeta):
             ds_cfg_file: Union[str, Path] = 'cfgs/datasets.yml'
         ) -> None:
         """Run the experiments on dataset `ds_name` in the ``exp_dir``.
-        
+
         Parameters
         ----------
         ds_name : `str`
@@ -103,10 +103,10 @@ class Base(metaclass=abc.ABCMeta):
         exp_dir : `Union[str, Path]`
             The directory to store experiments results.
         nbprocesses : `int`, optional
-            Specify the number of cpu parallel processes. If None, it will 
+            Specify the number of cpu parallel processes. If None, it will
             equal to the cpu count. Defaults to None.
         ds_cfg_file : `Union[str, Path]`, optional
-            The YAML config file of datasets. Defaults to 
+            The YAML config file of datasets. Defaults to
             'cfgs/datasets.yml'.
         """
         if ds_cfg_file == 'cfgs/datasets.yml':
@@ -114,22 +114,22 @@ class Base(metaclass=abc.ABCMeta):
                 Path(__file__).parents[1].joinpath(ds_cfg_file).resolve()
             )
         ds_cfg = load_cfg(ds_cfg_file)
-        
+
         # pc_scale : `int`
-        #     The maximum length of the point cloud among x, y, and z 
-        #     axes. Used as an encoding parameter in several PCC 
+        #     The maximum length of the point cloud among x, y, and z
+        #     axes. Used as an encoding parameter in several PCC
         #     algorithms.
         # has_color : `bool`
         #     True for point cloud containing color, false otherwise.
         self._pc_scale = ds_cfg[ds_name]['scale']
         self._has_color = ds_cfg[ds_name]['color']
-        
+
         exp_dir = (
             Path(exp_dir)
             .joinpath(f'{type(self).__name__}/{ds_name}/{self._rate}')
             .resolve()
         )
-        
+
         logger.info(
             f"Start to run experiments on {ds_name} dataset "
             f"with {type(self).__name__} in {exp_dir}"
@@ -141,9 +141,9 @@ class Base(metaclass=abc.ABCMeta):
             verbose=True
         )
 
-        # [TODO] 
+        # [TODO]
         # Workaround for using open3d visualizer with multithreading.
-        # Create visualizer here to prevent the deconstructor of the 
+        # Create visualizer here to prevent the deconstructor of the
         # visualizer terminate the `glfw`.
         # [ref.] https://github.com/intel-isl/Open3D/issues/389#issuecomment-396858138
         # o3d_vis = o3d.visualization.Visualizer()
@@ -156,11 +156,12 @@ class Base(metaclass=abc.ABCMeta):
             exp_dir=exp_dir,
             o3d_vis = o3d_vis
         )
-        
-        parallel(prun, pc_files, self._use_gpu, nbprocesses)
-        
+
+        for file in pc_files:
+            prun(file)
+
         logger.info(f"Total count of failures: {self._failure_cnt}")
-        
+
         summarize_one_setup(
             Path(exp_dir).joinpath('evl'), color=ds_cfg[ds_name]['color']
         )
@@ -174,9 +175,9 @@ class Base(metaclass=abc.ABCMeta):
             gpu_queue: BaseProxy = None,
             o3d_vis = None
         ) -> None:
-        """Run a single experiment on the given ``pcfile`` and save the 
+        """Run a single experiment on the given ``pcfile`` and save the
         experiment results and evaluation log into ``exp_dir``.
-        
+
         Parameters
         ----------
         pcfile : `Union[str, Path]`
@@ -184,18 +185,18 @@ class Base(metaclass=abc.ABCMeta):
         src_dir : `Union[str, Path]`
             The directory of input point cloud.
         nor_dir : `Union[str, Path]`
-            The directory of input point cloud with normal. (Necessary 
+            The directory of input point cloud with normal. (Necessary
             for p2plane metrics.)
         exp_dir : `Union[str, Path]`
             The directory to store experiments results.
         resolution : `int`, optional
-            Maximum NN distance of the ``pcfile``. Only used for 
-            evaluation. If the resolution is not specified, it will be 
+            Maximum NN distance of the ``pcfile``. Only used for
+            evaluation. If the resolution is not specified, it will be
             calculated on the fly. Defaults to None.
         gpu_queue : `BaseProxy`, optional
-            A multiprocessing Manager.Queue() object. The queue stores 
-            the GPU device IDs get from GPUtil.getAvailable(). Must be 
-            assigned if running a PCC algorithm using GPUs. Defaults to 
+            A multiprocessing Manager.Queue() object. The queue stores
+            the GPU device IDs get from GPUtil.getAvailable(). Must be
+            assigned if running a PCC algorithm using GPUs. Defaults to
             None.
         """
         self._gpu_queue = gpu_queue
@@ -212,27 +213,27 @@ class Base(metaclass=abc.ABCMeta):
             if not self.debug:
                 self._failure_cnt += 1
                 return
-        
+
         # # For evaluation only
         # enc_time = dec_time = -1
         # if not Path(out_pcfile).exists():
         #     return
-        
+
         self._evaluate_and_log(
             nor_pcfile, out_pcfile, bin_file, evl_log, enc_time, dec_time, o3d_vis
         )
 
 
     def _set_filepath(
-            self, 
+            self,
             pcfile: Union[str, Path],
             src_dir: Union[str, Path],
             nor_dir: Union[str, Path],
             exp_dir: Union[str, Path]
         ) -> Tuple[str, str, str, str, str]:
-        """Set up the experiment file paths, including encoded binary, 
+        """Set up the experiment file paths, including encoded binary,
         decoded point cloud, and evaluation log.
-        
+
         Parameters
         ----------
         pcfile : `Union[str, Path]`
@@ -240,16 +241,16 @@ class Base(metaclass=abc.ABCMeta):
         src_dir : `Union[str, Path]`
             The directory of input point cloud.
         nor_dir : `Union[str, Path]`
-            The directory of input point cloud with normal. (Necessary 
+            The directory of input point cloud with normal. (Necessary
             for p2plane metrics.)
         exp_dir : `Union[str, Path]`
             The directory to store experiments results.
-        
+
         Returns
         -------
         `Tuple[str, str, str, str, str]`
-            The full path of input point cloud, input point cloud with 
-            normal, encoded binary file, output point cloud, and 
+            The full path of input point cloud, input point cloud with
+            normal, encoded binary file, output point cloud, and
             evaluation log file.
         """
         in_pcfile = Path(src_dir).joinpath(pcfile)
@@ -260,13 +261,13 @@ class Base(metaclass=abc.ABCMeta):
         )
         out_pcfile = Path(exp_dir).joinpath('dec', pcfile)
         evl_log = Path(exp_dir).joinpath('evl', pcfile).with_suffix('.log')
-        
+
         bin_file.parent.mkdir(parents=True, exist_ok=True)
         out_pcfile.parent.mkdir(parents=True, exist_ok=True)
         evl_log.parent.mkdir(parents=True, exist_ok=True)
 
         return (
-            str(in_pcfile), str(nor_pcfile), str(bin_file), str(out_pcfile), 
+            str(in_pcfile), str(nor_pcfile), str(bin_file), str(out_pcfile),
             str(evl_log)
         )
 
@@ -297,9 +298,9 @@ class Base(metaclass=abc.ABCMeta):
         ) -> int:
         """Run the encoding and decoding command. Based on the `debug`
         flag, it will raise the ``CalledProcessError`` exception or add
-        the count of failures silently. Error messages will log into 
+        the count of failures silently. Error messages will log into
         files with timestamp in ``logs/``.
-        
+
         Parameters
         ----------
         cmd : `List[str]`
@@ -308,16 +309,16 @@ class Base(metaclass=abc.ABCMeta):
         execution_time : `List[float]`
             A list to store the execution_time.
         gpu_queue : `BaseProxy`, optional
-            A multiprocessing Manager.Queue() object. The queue stores 
-            the GPU device IDs get from GPUtil.getAvailable(). Must be 
-            assigned if running a PCC algorithm using GPUs. Defaults to 
+            A multiprocessing Manager.Queue() object. The queue stores
+            the GPU device IDs get from GPUtil.getAvailable(). Must be
+            assigned if running a PCC algorithm using GPUs. Defaults to
             None.
-        
+
         Returns
         -------
         `int`
             0 is successfully executed, 1 otherwise.
-        
+
         Raises
         ------
         `e`
@@ -325,21 +326,21 @@ class Base(metaclass=abc.ABCMeta):
         """
         if self._use_gpu:
             assert (not self._gpu_queue.empty())
-            
+
             gpu_id = self._gpu_queue.get()
             # Inject environment variable `CUDA_VISIBLE_DEVICES` to ``cmd``.
             env = dict(os.environ, CUDA_VISIBLE_DEVICES=str(gpu_id))
         else:
             env = os.environ
-        
+
         try:
             start_time = time.time()
             _ = sp.run(
-                cmd, 
+                cmd,
                 cwd=self._algs_cfg['rootdir'],
                 capture_output=True,
                 text=True,
-                env=env, 
+                env=env,
                 check=True
             )
             end_time = time.time()
@@ -349,7 +350,7 @@ class Base(metaclass=abc.ABCMeta):
                 Path(__file__).parents[1]
                 .joinpath(f'logs/execute_cmd_{timestamp}.log')
             )
-            
+
             with open(log_file, 'w') as f:
                 lines = [
                     f"The stdout and stderr of executed command: ",
@@ -362,7 +363,7 @@ class Base(metaclass=abc.ABCMeta):
                     f"{e.stderr}",
                 ]
                 f.writelines('\n'.join(lines))
-            
+
             logger.error(
                 f"Error occurs when executing command: "
                 "\n"
@@ -395,6 +396,6 @@ class Base(metaclass=abc.ABCMeta):
             o3d_vis
         )
         ret = evaluator.evaluate()
-        
+
         with open(evl_log, 'w') as f:
             f.write(ret)

@@ -17,12 +17,13 @@ class GPCC(Base):
             cmd = cmd + [
                 '--attribute=color'
             ]
-        
+
         return cmd
 
     def make_decode_cmd(self, bin_file, out_pcfile):
         cmd = [
             self._algs_cfg['decoder'],
+            # "--outputBinaryPly=1",
             f'--compressedStreamPath={bin_file}',
             f'--reconstructedDataPath={out_pcfile}',
             '--mode=1'
