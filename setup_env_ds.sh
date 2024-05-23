@@ -10,7 +10,7 @@ if [ ! -f "${PCC_ARENA_HOME}/evaluator/dependencies/mpeg-pcc-dmetric-master.tar.
     exit 0
 fi
 
-CONDA="micromamba"
+# CONDA="micromamba"
 
 # Cleaning conda environments
 # ${CONDA} env remove -n GeoCNNv1
@@ -21,7 +21,7 @@ CONDA="micromamba"
 # ========== In [root] ==========
 # conda env create -f cfgs/conda_env/GeoCNNv1.yml
 # conda env create -f cfgs/conda_env/GeoCNNv2.yml
-# conda env create -f cfgs/conda_env/PCGCv1.yml
+conda env create -f cfgs/conda_env/PCGCv1.yml
 # conda env create -f cfgs/conda_env/PCGCv2.yml
 
 
@@ -65,11 +65,11 @@ cd "${PCC_ARENA_HOME}/algorithms"
 #     git clone https://github.com/mauriceqch/pcc_geo_cnn_v2.git GeoCNNv2
 # fi
 
-# ## PCGCv1
-# if [ ! -d "./PCGCv1" ]
-# then
-#     git clone https://github.com/xtorker/PCGCv1.git PCGCv1
-# fi
+## PCGCv1
+if [ ! -d "./PCGCv1" ]
+then
+    git clone https://github.com/xtorker/PCGCv1.git PCGCv1
+fi
 
 ## PCGCv2
 # if [ ! -d "./PCGCv2" ]
