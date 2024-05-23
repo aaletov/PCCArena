@@ -16,31 +16,31 @@ def main():
     LOGGING_CONFIG = get_logging_config('utils/logging.conf')
     logging.config.dictConfig(LOGGING_CONFIG)
 
-    draco = Draco()
-    for rate in range(8):
-        draco.rate = f'r{rate+1}'
-        # draco.run_dataset('Sample_SNC', 'experiments')
-        # draco.run_dataset('Debug_SNC', 'experiments')
-        draco.run_dataset('Debug_SNCC', 'experiments', nbprocesses=1)
-        # draco.run_dataset('SNC_Test100', 'experiments')
-        # draco.run_dataset('SNCC_Test100', 'experiments')
-        # draco.run_dataset('MN40_Test100', 'experiments')
-        # draco.run_dataset('CAPOD_100', 'experiments')
-        # draco.run_dataset('8i_longdress_25', 'experiments')
-        # draco.run_dataset('8i_loot_25', 'experiments')
-        # draco.run_dataset('8i_soldier_25', 'experiments')
-        # draco.run_dataset('8i_redandblack_25', 'experiments')
-        # draco.run_dataset('8i_longdress_geo_25', 'experiments')
-        # draco.run_dataset('8i_loot_geo_25', 'experiments')
-        # draco.run_dataset('8i_soldier_geo_25', 'experiments')
-        # draco.run_dataset('8i_redandblack_geo_25', 'experiments')
+    # draco = Draco()
+    # for rate in range(8):
+    #     draco.rate = f'r{rate+1}'
+    #     # draco.run_dataset('Sample_SNC', 'experiments')
+    #     # draco.run_dataset('Debug_SNC', 'experiments')
+    #     draco.run_dataset('Debug_SNCC', 'experiments', nbprocesses=1)
+    #     # draco.run_dataset('SNC_Test100', 'experiments')
+    #     # draco.run_dataset('SNCC_Test100', 'experiments')
+    #     # draco.run_dataset('MN40_Test100', 'experiments')
+    #     # draco.run_dataset('CAPOD_100', 'experiments')
+    #     # draco.run_dataset('8i_longdress_25', 'experiments')
+    #     # draco.run_dataset('8i_loot_25', 'experiments')
+    #     # draco.run_dataset('8i_soldier_25', 'experiments')
+    #     # draco.run_dataset('8i_redandblack_25', 'experiments')
+    #     # draco.run_dataset('8i_longdress_geo_25', 'experiments')
+    #     # draco.run_dataset('8i_loot_geo_25', 'experiments')
+    #     # draco.run_dataset('8i_soldier_geo_25', 'experiments')
+    #     # draco.run_dataset('8i_redandblack_geo_25', 'experiments')
 
-    gpcc = GPCC()
-    for rate in range(8):
-        gpcc.rate = f'r{rate+1}'
-        # gpcc.run_dataset('Sample_SNC', 'experiments')
-        # gpcc.run_dataset('Debug_SNC', 'experiments')
-        gpcc.run_dataset('Debug_SNCC', 'experiments', nbprocesses=1)
+    # gpcc = GPCC()
+    # for rate in range(8):
+    #     gpcc.rate = f'r{rate+1}'
+    #     # gpcc.run_dataset('Sample_SNC', 'experiments')
+    #     # gpcc.run_dataset('Debug_SNC', 'experiments')
+    #     gpcc.run_dataset('Debug_SNCC', 'experiments', nbprocesses=1)
         # gpcc.run_dataset('SNC_Test100', 'experiments')
         # gpcc.run_dataset('SNCC_Test100', 'experiments')
         # gpcc.run_dataset('MN40_Test100', 'experiments')
