@@ -284,6 +284,8 @@ class Base(metaclass=abc.ABCMeta):
         # run encoding and decoding
         # throw exception if any failure occurs during the process
         try:
+            print(enc_cmd)
+            print(dec_cmd)
             enc_time = self._run_command(enc_cmd)
             dec_time = self._run_command(dec_cmd)
         except:
@@ -324,14 +326,14 @@ class Base(metaclass=abc.ABCMeta):
         `e`
             Exception ``subprocess.CalledProcessError``.
         """
-        if self._use_gpu:
-            assert (not self._gpu_queue.empty())
+        # if self._use_gpu:
+        #     assert (not self._gpu_queue.empty())
 
-            gpu_id = self._gpu_queue.get()
-            # Inject environment variable `CUDA_VISIBLE_DEVICES` to ``cmd``.
-            env = dict(os.environ, CUDA_VISIBLE_DEVICES=str(gpu_id))
-        else:
-            env = os.environ
+        #     gpu_id = self._gpu_queue.get()
+        #     # Inject environment variable `CUDA_VISIBLE_DEVICES` to ``cmd``.
+        #     env = dict(os.environ, CUDA_VISIBLE_DEVICES=str(gpu_id))
+        # else:
+        env = os.environ
 
         try:
             start_time = time.time()
@@ -371,9 +373,9 @@ class Base(metaclass=abc.ABCMeta):
                 "\n"
                 f"Check {log_file} for more informations."
             )
-        finally:
-            if self._use_gpu:
-                self._gpu_queue.put(gpu_id)
+        # finally:
+        #     if self._use_gpu:
+        #         self._gpu_queue.put(gpu_id)
 
         return end_time - start_time
 
