@@ -159,7 +159,7 @@ class PointBasedMetrics(MetricBase):
                 f"Hausdorff distance         p2pl: {geo_haus_p2plane_symm}",
                 "\n",
             ]
-        if self._has_color:
+        if self._has_color and ("ColorPSNR(symmetric)" in res):
             y_color_psnr = res["ColorPSNR(symmetric)"][0]
             u_color_psnr = res["ColorPSNR(symmetric)"][1]
             v_color_psnr = res["ColorPSNR(symmetric)"][2]
