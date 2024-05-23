@@ -1,83 +1,104 @@
 #! /bin/bash
-set -euo pipefail
+set -euox pipefail
+
+PCC_ARENA_HOME=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 # check mpeg-pcc-dmetric-master.tar.gz exists
-if [ ! -f evaluator/dependencies/mpeg-pcc-dmetric-master.tar.gz ]; then
+if [ ! -f "${PCC_ARENA_HOME}/evaluator/dependencies/mpeg-pcc-dmetric-master.tar.gz" ]; then
     echo "[File not found] evaluator/dependencies/mpeg-pcc-dmetric-master.tar.gz"
     echo "Please download it from http://mpegx.int-evry.fr/software/MPEG/PCC/mpeg-pcc-dmetric"
     exit 0
 fi
 
-# Cleaning conda environments 
-conda env remove -n GeoCNNv1
-conda env remove -n GeoCNNv2
-conda env remove -n PCGCv1
-conda env remove -n PCGCv2
+CONDA="micromamba"
+
+# Cleaning conda environments
+# ${CONDA} env remove -n GeoCNNv1
+# ${CONDA} env remove -n GeoCNNv2
+# ${CONDA} env remove -n PCGCv1
+# ${CONDA} env remove -n PCGCv2
 
 # ========== In [root] ==========
-conda env create -f cfgs/conda_env/GeoCNNv1.yml
-conda env create -f cfgs/conda_env/GeoCNNv2.yml
-conda env create -f cfgs/conda_env/PCGCv1.yml
-conda env create -f cfgs/conda_env/PCGCv2.yml
+# conda env create -f cfgs/conda_env/GeoCNNv1.yml
+# conda env create -f cfgs/conda_env/GeoCNNv2.yml
+# conda env create -f cfgs/conda_env/PCGCv1.yml
+# conda env create -f cfgs/conda_env/PCGCv2.yml
 
 
 
-cd algorithms
+cd "${PCC_ARENA_HOME}/algorithms"
 # ========== In [root]/algs/ ==========
 
 ## Draco
-git clone --depth 1 --branch 1.3.6 https://github.com/google/draco.git Draco
+if [ ! -d "./Draco" ]
+then
+    git clone --depth 1 --branch 1.4.3 https://github.com/google/draco.git Draco
+fi
 cd Draco
-mkdir build && cd build && cmake .. && make
-cd ../..
+mkdir -p build && cd build && cmake .. && make
+cd "${PCC_ARENA_HOME}/algorithms"
 
 ## GPCC
-git clone --depth 1 --branch release-v12.0 https://github.com/MPEGGroup/mpeg-pcc-tmc13.git GPCC
+if [ ! -d "./GPCC" ]
+then
+    git clone --depth 1 --branch release-v12.0 https://github.com/MPEGGroup/mpeg-pcc-tmc13.git GPCC
+fi
 cd GPCC
-mkdir build && cd build && cmake .. && make
-cd ../..
+mkdir -p build && cd build && cmake .. && make
+cd "${PCC_ARENA_HOME}/algorithms"
 
 ## VPCC
-git clone --depth 1 --branch release-v12.0 https://github.com/MPEGGroup/mpeg-pcc-tmc2.git VPCC
-cd VPCC
-./build.sh
-cd ..
+# git clone --depth 1 --branch release-v12.0 https://github.com/MPEGGroup/mpeg-pcc-tmc2.git VPCC
+# cd VPCC
+# ./build.sh
+# cd ..
 
 ## GeoCNNv1
-git clone https://github.com/mauriceqch/pcc_geo_cnn.git GeoCNNv1
+# if [ ! -d "./GeoCNNv1" ]
+# then
+#     git clone https://github.com/mauriceqch/pcc_geo_cnn.git GeoCNNv1
+# fi
 
-## GeoCNNv2
-git clone https://github.com/mauriceqch/pcc_geo_cnn_v2.git GeoCNNv2
+# ## GeoCNNv2
+# if [ ! -d "./GeoCNNv2" ]
+# then
+#     git clone https://github.com/mauriceqch/pcc_geo_cnn_v2.git GeoCNNv2
+# fi
 
-## PCGCv1
-git clone https://github.com/xtorker/PCGCv1.git PCGCv1
+# ## PCGCv1
+# if [ ! -d "./PCGCv1" ]
+# then
+#     git clone https://github.com/xtorker/PCGCv1.git PCGCv1
+# fi
 
 ## PCGCv2
-git clone https://github.com/xtorker/PCGCv2.git PCGCv2
+# if [ ! -d "./PCGCv2" ]
+# then
+#     git clone https://github.com/xtorker/PCGCv2.git PCGCv2
+# fi
 
-cd ..
+cd "${PCC_ARENA_HOME}/evaluator/dependencies"
 
-
-cd evaluator/dependencies
 # ========== In [root]/evaluator/dependencies ==========
 
 # MPEG pcc dmetric
-# Download mpeg-pcc-dmetric-master.tar.gz v0.13.5 
+# Download mpeg-pcc-dmetric-master.tar.gz v0.13.5
 # from http://mpegx.int-evry.fr/software/MPEG/PCC/mpeg-pcc-dmetric
 tar zxvf mpeg-pcc-dmetric-master.tar.gz
 patch -sp0 < mpeg-pcc-dmetric.patch
 cd mpeg-pcc-dmetric-master
 ./build.sh
-cd ..
+cd "${PCC_ARENA_HOME}/evaluator/dependencies"
 
 # libgdiam
 wget https://sarielhp.org/research/papers/00/diameter/libgdiam-1.0.3.tar.gz
 tar zxvf libgdiam-1.0.3.tar.gz
 patch -sp0 < libgdiam-1.0.3.patch
 cd libgdiam-1.0.3
-mkdir build && cd build && cmake .. && make
-cd ../../../..
+mkdir -p build && cd build && cmake .. && make
+
+cd "${PCC_ARENA_HOME}"
 
 # ========== In [root] ==========
 mv checkpoints/ algorithms/PCGCv1/
-mv ckpts/ algorithms/PCGCv2/
+# mv ckpts/ algorithms/PCGCv2/

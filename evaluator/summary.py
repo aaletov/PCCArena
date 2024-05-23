@@ -18,9 +18,9 @@ logger = logging.getLogger(__name__)
 # Current version is hard to maintain.
 def summarize_one_setup(log_dir: Union[str, Path], color: bool = False) -> None:
     """Summarize the evaluation results for an experimental setup. Store
-    raw data into .csv file and summarize the avg., stdev., max., and 
+    raw data into .csv file and summarize the avg., stdev., max., and
     min. into .log file.
-    
+
     Parameters
     ----------
     log_dir : `Union[str, Path]`
@@ -36,9 +36,9 @@ def summarize_one_setup(log_dir: Union[str, Path], color: bool = False) -> None:
         'encT':        'Encoding time (s)           : ',
         'decT':        'Decoding time (s)           : ',
         'bpp':         'bpp (bits per point)        : ',
-        'y_psnr':      'Y-PSNR (dB)                    : ',
-        'cb_psnr':     'Cb-PSNR (dB)                   : ',
-        'cr_psnr':     'Cr-PSNR (dB)                   : ',
+        'y_psnr':      'Y-CPSNR (dB)                   : ',
+        'cb_psnr':     'U-CPSNR (dB)                   : ',
+        'cr_psnr':     'V-CPSNR (dB)                   : ',
         'ssim':        'SSIM                           : ',
         'vmaf':        'VMAF                           : ',
         'acd12_p2pt':  'Asym. Chamfer dist. (1->2) p2pt: ',
@@ -100,7 +100,7 @@ def summarize_one_setup(log_dir: Union[str, Path], color: bool = False) -> None:
         Path(log_dir).parent
         .joinpath(f'{alg_name}_{ds_name}_{rate}_summary.csv')
     )
-    
+
     with open(summary_csv, 'w') as csvfile:
         csvwriter = csv.writer(csvfile, delimiter=',')
         # write header
@@ -113,27 +113,27 @@ def summarize_one_setup(log_dir: Union[str, Path], color: bool = False) -> None:
 
     # # Summarize the results and save them into the .log file
     # summary_log = summary_csv.with_suffix('.log')
-    
+
     # with open(summary_log, 'w') as f:
     #     lines = [
     #         f"PCC-Arena Evaluator {__version__}",
     #         f"Summary of the log directory: {log_dir}"
     #         "\n",
     #     ]
-        
+
     #     statistics = {
     #         'Avg.': np.nanmean,
     #         'Stdev.': np.nanstd,
     #         'Max.': np.nanmax,
     #         'Min.': np.nanmin,
     #     }
-        
+
     #     for stat, op in statistics.items():
     #         tmp_lines = [f"***** {stat} *****"]
     #         for key, pattern in chosen_metrics_text.items():
     #             tmp_nparray = np.array(found_val[key], dtype=np.float)
     #             tmp_lines.append(f"{stat} {pattern}{op(tmp_nparray)}")
-            
+
     #         tmp_lines.insert(1, "========== Time & Binary Size ==========")
     #         tmp_lines.insert(5, "\n")
     #         tmp_lines.insert(6, "========== Objective Quality ===========")
@@ -144,7 +144,7 @@ def summarize_one_setup(log_dir: Union[str, Path], color: bool = False) -> None:
     #             tmp_lines.insert(22, "\n")
     #             tmp_lines.insert(23, "============== QoE Metric ==============")
     #             tmp_lines.insert(25, "\n")
-            
+
     #         tmp_lines.append("\n")
     #         lines += tmp_lines
 
@@ -159,7 +159,7 @@ def summarize_all_to_csv(exp_dir):
         glob_file(exp_dir, '*_summary.csv', fullpath=True)
     )
     csvfile = Path(exp_dir).joinpath('summary.csv')
-    
+
     chosen_metrics = [
         'pc_file',
         'encT',
@@ -195,12 +195,12 @@ def summarize_all_to_csv(exp_dir):
         ]
         header += chosen_metrics
         csvwriter.writerow(header)
-        
+
         for log in exp_results:
             alg_name = Path(log).parents[2].stem
             ds_name = Path(log).parents[1].stem
             rate = Path(log).parents[0].stem
-            
+
             with open(log, 'r') as f:
                 row = [alg_name, ds_name, rate]
                 f_csv = csv.reader(f, delimiter=',')
